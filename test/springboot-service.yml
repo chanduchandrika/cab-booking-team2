@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: cab-booking
+  name: cab-booking
+spec:
+  ports:
+    - name: cab-booking
+      port: 8080
+      protocol: TCP
+  selector:
+    app: cab-booking
+  type: LoadBalancer

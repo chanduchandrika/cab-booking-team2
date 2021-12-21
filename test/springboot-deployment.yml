@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cab-booking
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      app: cab-booking
+  replicas: 1
+  template:
+    metadata:
+      name: cab-booking
+      labels:
+        app: cab-booking
+    spec:
+      containers:
+      - name: cab-booking
+        env:
+          - name: POSTGRES_USER
+            valueFrom:
+              secretKeyRef:
+                 name: postgres-secrets
+                 key: username
+          - name: POSTGRES_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                 name: postgres-secrets
+                 key: password
+          - name: POSTGRES_HOST
+            valueFrom:
+              configMapKeyRef:
+                name: hostname-config
+                key: postgres_host
+        image: chanduyerramsetti/cab-booking
